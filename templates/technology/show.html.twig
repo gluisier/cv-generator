@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Technology{% endblock %}
+
+{% block body %}
+	<h1>Technology</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Version</th>
+				<td>{{ technology.version }}</td>
+			</tr>
+			<tr>
+				<th>DeletedAt</th>
+				<td>{{ technology.deletedAt ? technology.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_technology_index') }}">back to list</a>
+
+	<a href="{{ path('app_technology_edit', {'version': technology.version}) }}">edit</a>
+
+	{{ include('technology/_delete_form.html.twig') }}
+{% endblock %}

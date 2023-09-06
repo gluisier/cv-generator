@@ -1,0 +1,13 @@
+ <span class="technologies">(
+	{%- for technology in entities -%}
+		<span data-left="{{ technology.skill.lft }}" data-right="{{ technology.skill.rgt }}"
+				{%- if action == 'edit' %}
+				data-uri="{{ path('technology_edit', {'realisation': technology.realisation.id, 'skill': technology.skill.name, 'version': technology.version}) }}" data-name="skill[technology]"
+				{%- endif %}>
+			{{- technology.skill.name }}
+			{%- if technology.version %} {% if action == 'edit' %}<span data-name="technology[version]">{% endif -%}
+			{{- technology.version -}}
+				{%- if action == 'edit' %}</span>{% endif -%}
+			{% endif %}</span>
+		{%- if not loop.last %}, {% endif %}
+	{%- endfor %})</span>

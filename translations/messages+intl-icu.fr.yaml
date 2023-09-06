@@ -1,0 +1,33 @@
+app:
+  title: Curriculum Vitæ
+  old_browser: Ce navigateur n'est plus maintenu. Je vous conseille vivement de le mettre à jour ou d'utiliser une alternative
+  person:
+    age: "{age} ans"
+    details: Pour des raisons techniques, ceci est une version PDF d'une page web. Vous voulez voir l'original, potentiellement plus à jour, ou vous avez besoin des certificats et diplômes ? Téléchargez l'archive à l'adresse
+    references:
+      heading: Références
+    updated_on: "Actualisé le <time datetime=\"{iso}\">{date}</time>"
+  company:
+    link:
+      title: Voir le site de l'entreprise
+  skill:
+    heading: Compétences
+    noscript: Sans JavaScript, tous les détails des expériences seront affichés par défaut. Prenez le temps de masquer ce qui vous intéresse moins avant d'imprimer.
+    help: 🔎 ☑️ Recherchez et sélectionnez ce qui vous intéresse pour n'afficher que les détails des expériences concernées.
+    not_selectable: Cette compétence n'est pas spécifique à une réalisation quelconque.
+  experience:
+    heading: Expérience professionnelle
+    now: actuel
+  realisation:
+    heading: Réalisations
+    link:
+      title: Voir la réalisation
+  training:
+    heading: Formation
+  language:
+    heading: Langues
+    fr: Français
+    en: Anglais
+    de: Allemand
+  hobbies:
+    heading: Hobbies

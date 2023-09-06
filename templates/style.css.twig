@@ -1,0 +1,256 @@
+<style>
+body {
+	font-family: Calibri, Arial, Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	width: 700px;
+	margin: auto;
+	padding-bottom: 13px;
+}
+section>div+div {
+	margin-top: 13px;
+	clear: both;
+}
+h1 {
+	font-size: 48px;
+	margin: 0 0 18px 0;
+}
+h2 {
+	font-size: 20px;
+	margin-left: 100px;
+	clear: both;
+}
+h1+h2 {
+	margin-top: 20px;
+	margin-left: 0;
+}
+h3,h4 {
+	margin: 0;
+}
+h4 {
+	font-weight: normal;
+	font-style: italic;
+}
+p {
+	margin: 0;
+}
+section div>.first-column {
+	width: 130px;
+	font-size: 14px;
+	margin: 0;
+}
+.middle:not(h3,h4) {
+	display: inline;
+}
+.middle:not(h3,h4,#References p) {
+	margin: 0 0 0 2.5em;
+}
+.technologies {
+	font-style: italic;
+}
+.short {
+	display: inline-block;
+	width: 70px;
+	margin: 0;
+}
+.what:not(h3,h4) {
+	margin: 0 0 0 2.5em;
+}
+.smaller {
+	font-size: smaller;
+	display: inline-block;
+	margin: 0;
+}
+sup {
+	vertical-align: top;
+}
+header {
+	display: block;
+	text-align: center;
+	height: auto;
+	clear: both;
+	font-size: 18px;
+}
+header p, header address {
+	float: none !important;
+	margin: 1em 0 !important;
+	width: auto !important;
+}
+header .half.left {
+	width: 60%;
+}
+header .half.right {
+	width: 40%;
+}
+div.left p, div.right p {
+	float: left;
+	margin: 0;
+	width: 130px;
+}
+address {
+	font-style: normal;
+}
+blockquote {
+	clear: both;
+	text-align: center;
+	margin: 1em 0;
+}
+footer {
+	display: block;
+	margin-top: 0.83em;
+}
+#ComputerScience ul {
+	list-style-type: none;
+	padding-left: 0;
+	column-count: 4;
+	width: 100%;
+	column-rule: 1px dotted;
+	column-gap: 3px;
+	padding-left: 0;
+}
+#ComputerScience input[disabled], #ComputerScience input[disabled]+label {
+	cursor: not-allowed;
+}
+#ComputerScience div>form>input {
+	width: 100%;
+	border-radius: 1em;
+	border: 0px none transparent;
+	padding: 0.25em;
+	margin: 0.5em auto 0;
+	text-align: center;
+}
+.half {
+	width: 50%;
+	height: 100%;
+}
+.right {
+	display: block;
+	float: right;
+}
+.left {
+	display: block;
+	float: left;
+}
+.right + .right {
+	clear: both;
+	height: auto;
+}
+section > div:not(.container) {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+section > div:not(.container) > div {
+	width: 570px;
+}
+.place {
+	width: 208px;
+	margin: 0 0 0 auto;
+}
+.clearer {
+	width: 100%;
+	height: 0;
+	clear: both;
+}
+details > details {
+	margin-left: 1em;
+}
+details > ul {
+	margin-top: 0;
+	padding-left: 1em;
+}
+summary {
+	text-indent: -1em;
+}
+@media screen {
+body {
+	background-color: #2c456e;
+	background-image: repeating-linear-gradient(135deg, #2c456e 0%, #2f4a75 5%, #2c456e 10%);
+	color: #3299cc;
+}
+h1, h1+h2 {
+	color: #e4b063;
+}
+h2 {
+	color: #36ad2e;
+}
+.container {
+	padding: 3px;
+}
+a {
+	color: #3299cc;
+}
+sup {
+	display: none;
+}
+.noscreen {
+	display: none !important;
+}
+span[title], p[title]:not(.tel), h4[title] {
+	border-bottom: 1px dotted;
+}
+.selected, .container {
+	background-color: #3a5c9233;
+	border-radius: 5px;
+}
+noscript {
+	color: red;
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+#ComputerScience div>form>input {
+	animation-name: blink;
+	animation-duration: 2s;
+	animation-iteration-count: 3;
+}
+@keyframes blink {
+	0% {
+		background-color: white;
+	}
+	50% {
+		background-color: #fcc;
+	}
+	100% {
+		background-color: white;
+	}
+}
+}
+@media print {
+body {
+	color: #777777 !important;
+}
+h1 {
+	color: black;
+}
+h2 {
+	margin: 0.5em 0  0.5em 100px;
+}
+section>h2 {
+	page-break-after: avoid;
+}
+h3 {
+	page-break-before: avoid;
+	page-break-after: avoid;
+}
+.half, .section, .vcard {
+	page-break-inside: avoid;
+	page-break-before: avoid;
+}
+.vevent>p {
+	page-break-after: avoid;
+}
+details {
+	page-break-inside: avoid;
+}
+.noprint {
+	display: none !important;
+}
+#ComputerScience div>form>ul {
+	column-gap: 10px;
+}
+.references p {
+	font-size: smaller;
+	margin: 0;
+}
+}
+</style>

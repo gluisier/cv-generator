@@ -1,0 +1,100 @@
+<script>/*<![CDATA[*/
+window.addEventListener('DOMContentLoaded', (event) => {
+	const hiddenParts = document.querySelectorAll('#ComputerScience [hidden]');
+	for (hiddenPart of hiddenParts) {
+		hiddenPart.hidden = false;
+	}
+	const search = document.querySelector('#ComputerScience input[type="search"]');
+	const skills = document.querySelectorAll('#ComputerScience input[type="checkbox"][data-left]');
+	search.addEventListener('focus', function (e) {
+		if (e.target.value.length < 3) {
+			for (skill of skills) {
+				skill.parentNode.hidden = true;
+			}
+		}
+	});
+	search.addEventListener('blur', function (e) {
+		if (e.target.value.length < 3) {
+			for (skill of skills) {
+				skill.parentNode.hidden = false;
+			}
+		}
+	})
+	search.addEventListener('input', function (e) {
+		if (e.target.value.length >= 3) {
+			const regex = new RegExp(e.target.value, 'i');
+			for (skill of skills) {
+				skill.parentNode.hidden = !skill.parentNode.querySelector('label').innerHTML.match(regex);
+			}
+		} else {
+			for (skill of skills) {
+				skill.parentNode.hidden = true;
+			}
+		}
+	});
+	for (skill of skills) {
+		skill.addEventListener('change', (event) => {
+			const target = event.target;
+			const left = parseInt(target.dataset.left, 10);
+			const right = parseInt(target.dataset.right, 10);
+			const container = target.parentNode;
+			const checked = target.checked;
+			if (checked) {
+				container.querySelector('label').classList.remove('noprint');
+			} else {
+				container.querySelector('label').classList.add('noprint');
+			}
+			for (child of skills) {
+				if (child.dataset.left > left
+					&& child.dataset.right < right
+					&& !child.checked
+				) {
+					child.indeterminate = checked;
+					if (checked) {
+						child.parentNode.querySelector('label').classList.remove('noprint');
+					} else {
+						child.parentNode.querySelector('label').classList.add('noprint');
+					}	
+				}
+			}
+			const technologies = document.querySelectorAll('#Career details .technologies>span');
+			for (technology of technologies) {
+				if (technology.dataset.left >= left
+					&& technology.dataset.right <= right
+				) {
+					technology.closest('details').open = checked;
+					if (experience = technology.closest('details').parentNode.closest('details')) {
+						experience.open = checked;
+					}
+				}
+			}
+		});
+		skill.disabled = false;
+		skill.checked = false;
+		skill.parentNode.querySelector('label').classList.add('noprint');
+	}
+	const details = document.querySelectorAll('#Career details');
+	for (detail of details) {
+		detail.open = false;
+	}
+	const content = document.querySelectorAll('#Career p.middle, #Career details.what>summary, #Training .middle');
+	const footnoteContainer = document.getElementById('Footnotes');
+	const abbreviations = JSON.parse(footnoteContainer.dataset.abbreviations);
+	if (!footnoteContainer.children.length) {
+		for (const index in abbreviations) {
+			const abbreviation = abbreviations[index];
+			const regex = new RegExp('(' + abbreviation.short + ')(?!<sup)');
+			const replacement = '<abbr title="' + abbreviation.description + '">$1<sup class="c_fn">' + (1 + parseInt(index, 10)) + '</sup></abbr>';
+			const footnote = '<p><sup>' + (1 + parseInt(index, 10)) + '</sup> ' + abbreviation.description + '</p>';
+			footnoteContainer.innerHTML = footnoteContainer.innerHTML + footnote;
+			for (const place of content) {
+				const newContent = place.innerHTML.replace(regex, replacement);
+				if (place.innerHTML != newContent) {
+					place.innerHTML = newContent;
+					break;
+				}
+			}
+		}
+	}
+})
+/*]]>*/</script>

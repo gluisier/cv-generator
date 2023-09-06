@@ -1,0 +1,33 @@
+app:
+  title: Resume
+  old_browser: This browser is no longer maintained. I strongly suggest to update it or use an alternative
+  person:
+    age: "{age} years old"
+    details: For technical reasons, this is a frozen PDF version of a web page. Want to see the original and more up to date applicant file, or you need certificates and diplomas? Download the archive at
+    references:
+      heading: References
+    updated_on: "Updated on <time datetime=\"{iso}\">{date}</time>"
+  company:
+    link:
+      title: Go to company website
+  skill:
+    heading: Computer skills
+    noscript: Without JavaScript, all work experience details will be displayed by default. Please take time to hide what seems less relevant before printing.
+    help: 🔎 ☑️ Please search and select what seems relevant to you to display details only about related work experiences.
+    not_selectable: This skill is not specific to any particular realisation.
+  experience:
+    heading: Work experience
+    now: current
+  realisation:
+    heading: Achievements
+    link:
+      title: Explore achievement
+  training:
+    heading: Training
+  language:
+    heading: Languages
+    fr: French
+    en: English
+    de: German
+  hobbies:
+    heading: Hobbies

@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ me.fullName }} ~ {{ 'app.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+{% include 'style.css.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+{% include 'javascript.js.twig' %}
+<script src=""></script>
+{% endblock %}
+
+{% block body %}
+<header class="vcard p-contact h-card">
+	<div class="half left">
+		<h1 id="Name" class="fn" data-name="person[fullName]">{{ me.fullName }}</h1>
+		<h2 data-name="person[position]">{{ me.position }}</h2>
+		<p><time datetime="{{ me.birthDate|date('Y-m-d') }}" data-name="person[birthDate]">{{ me.birthDate|date('d.m.Y') }}</time> ({{ 'app.person.age'|trans({'age': me.age}) }}) – <span data-name="person[nationality]">{{ me.nationality }}</span> – <span data-name="person[maritalStatus]">{{ me.maritalStatus }}</span></p>
+	</div>
+	<div class="half right">
+		<address class="adr">
+			<span data-name="address[street]">{{ me.address.street }}</span>
+			{#-}<img src="data:image/jpeg;base64," alt="Portrait" title="Portrait" class="right photo" />{#}<br />
+			<span data-name="address[postalCode]">{{ me.address.postalCode }}</span> <span data-name="address[city]">{{ me.address.city }}</span>
+		</address>
+		<p data-name="person[phone]">{{ me.phone }}</p>
+		<p data-name="person[email]">{{ me.email }}</p>
+	</div>
+</header>
+<blockquote data-name="person[summary]">
+{{ me.summary }}
+</blockquote>
+
+<section id="ComputerScience">
+{% include 'skill/index_cv.html.twig' with {'entities': me.skills} %}
+</section>
+
+{% if me.experiences.count %}
+<section id="Career">
+{% include 'experience/index_cv.html.twig' with {'entities': me.experiences} %}
+</section>
+{% endif %}
+
+{% if me.trainings.count %}
+<section id="Training" class="education vcalendar">
+{% include 'training/index_cv.html.twig' with {'entities': me.trainings} %}
+</section>
+
+<section id="Languages">
+	<h2 class="break-before">{{ 'app.language.heading'|trans({'count': me.languages.count}) }}</h2>
+	{% for language in me.languages %}
+		<div id="{{ language.code }}">
+			<h3 data-name="language[code]">{{ ('app.language.' ~ language.code)|trans }}</h3>
+			{% if language.meaning is not null %}<p class="short" data-name="language[level]">{{ language.level }}</p>
+			<p class="smaller" data-name="language[meaning]">({{ language.meaning }})</p>{% else %}
+			<p data-name="language[level]">{{ language.level }}</p>{% endif %}
+		</div>
+	{% endfor %}
+</section>
+
+<section id="References" class="section">
+	<h2>{{ 'app.person.references.heading'|trans({'count': me.referrals.count} ) }}</h2>
+	{% for reference in me.referrals %}
+		<div id="{{ reference.id }}">
+			<h3 data-name="person[fullName]">{{ reference.fullName }}</h3>
+			{% if reference.experiences.count %}
+				<p class="middle">{{ reference.experiences[0].what|raw ~ ', ' ~ reference.experiences[0].company.name }}</p>
+			{% else %}
+				<p class="middle">{{ 'app.experience.none'|trans }}</p>
+			{% endif %}
+			{% if reference.email is defined %}<p class="place right" data-name="person[email]">{{ reference.email }}</p>{% endif %}
+			{% if reference.phone is defined %}<p class="place right" data-name="person[phone]">{{ reference.phone }}</p>{% endif %}
+			<div class="clearer"></div>
+		</div>
+	{% endfor %}
+</section>
+
+<section id="Hobbies" class="section">
+	<h2>{{ 'app.hobbies.heading'|trans({'count': me.hobbies.count}) }}</h2>
+	{% for hobby in me.hobbies %}
+		<div id="{{ hobby.what|url_encode }}">
+			<h3 data-name="hobby[what]">{{ hobby.what }}</h3>
+			<p class="middle" data-name="hobby[description]">{{ hobby.description|raw }}</p>
+		</div>
+	{% endfor %}
+</section>
+
+<footer>
+	<div id="Footnotes" class="references noscreen" data-abbreviations="{{ abbreviations|json_encode }}"></div>
+</footer>
+{% endblock body %}

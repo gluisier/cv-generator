@@ -1,0 +1,4 @@
+<h2>{{ 'app.experience.heading'|trans }}</h2>
+{% for experience in entities %}
+	{% include 'experience/show_cv.html.twig' with {'entity': experience} %}
+{% endfor %}

@@ -1,0 +1,4 @@
+<h4 class="middle">{{ 'app.realisation.heading'|trans({'count': entities.count} ) }}</h4>
+{% for realisation in entities %}
+	{% include 'realisation/show_cv.html.twig' with {'entity': realisation} %}
+{% endfor %}

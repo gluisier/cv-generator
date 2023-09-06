@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ app.request.locale }}" xml:lang="{{ app.request.locale }}">
+<head>
+	<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+	<title>{% block title %}{% endblock %}</title>
+	<meta name="author" content="Gaël Luisier" />
+	{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+	{% block stylesheets -%}
+		{{ encore_entry_link_tags('app') }}
+	{% endblock %}
+
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+	{% endblock %}
+</head>
+<body class="hresume h-resume" itemscope="itemscope" itemtype="http://schema.org/Person"{% if action == 'edit' %} data-uri="{{ path('person_edit', {'id': me.id}) }}"{% endif %}>
+<!--[if IE]>
+<div style="width: 100%; background-color: #e4b063; color: black; line-height: 1.2em; padding: 5px 0; text-align: center;">
+{{ 'app.old_browser'|trans }}
+</div>
+<![endif]-->
+	{% for type, flashMessages in app.session.flashbag.all() %}
+		{% for flashMessage in flashMessages %}
+			<div class="flash-{{ type }}">
+				{{ flashMessage }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+	{% block body %}{% endblock %}
+</body>
+</html>
