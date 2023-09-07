@@ -3,7 +3,7 @@ app:
   old_browser: This browser is no longer maintained. I strongly suggest to update it or use an alternative
   person:
     age: "{age} years old"
-    details: For technical reasons, this is a frozen PDF version of a web page. Want to see the original and more up to date applicant file, or you need certificates and diplomas? Download the archive at
+    details: For technical reasons, this is a frozen version of a web page. Want to see the original and more up to date applicant file, or you need certificates and diplomas? Download the archive at
     references:
       heading: References
     updated_on: "Updated on <time datetime=\"{iso}\">{date}</time>"

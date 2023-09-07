@@ -1,0 +1,7 @@
+@page {
+    size: A4; /* 1240 / 1754 px @200 DPI */
+    margin: -5pt;
+}
+.noprint {
+    display: none !important;
+}

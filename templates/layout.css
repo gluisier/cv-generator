@@ -1,0 +1,119 @@
+body {
+	font-family: "Open Sans", Arial, Verdana, Helvetica, sans-serif;
+}
+h1, h2, h3, h4 {
+	font-family: Jost, Arial, Verdana, Helvetica, sans-serif;
+}
+blockquote {
+	margin: 0;
+	text-align: justify;
+}
+div.h-resume {
+	--page-size: 1230px;
+	--image-size: 435px;
+	width: var(--page-size);
+	margin: auto;
+	display: grid;
+	grid-template:
+		"image lead"
+		"aside main"
+		"footer main" / var(--image-size);
+}
+img {
+	grid-area: image;
+	width: var(--image-size);
+	aspect-ratio: 1/1;
+	filter: grayscale(1);
+}
+#Lead {
+	grid-area: lead;
+	padding: 1.5rem;
+}
+aside, footer {
+	padding-left: 1.5em;
+	width: var(--image-size);
+	grid-area: aside;
+	box-sizing: border-box;
+}
+aside>p:first-of-type {
+	text-align: center;
+}
+address {
+	font-style: normal;
+}
+aside>section>*:not(.h2) {
+	margin-right: 1.5em;
+}
+#Contact > address + p, #Contact > p + p {
+	margin-top: 1em;
+}
+#Contact i {
+	margin-right: 1em;
+	color: var(--blue);
+}
+#ComputerScience ul {
+	margin: 0;
+	padding: 0;
+}
+#ComputerScience li {
+	list-style: none;
+	display: inline-block;
+}
+#ComputerScience li ~ li:not(:last-of-type) {
+	padding-right: 0.5rem;
+	border-right: 1px solid;
+}
+main {
+	grid-area: main;
+	padding: 0 1.5em 1.5em 1.5em;
+	box-sizing: border-box;
+}
+/** */
+main>section>div {
+	display: grid;
+	grid-template:
+		"organizer role"
+		"period summaries"
+		"heading summaries"
+		"titles summaries" / auto calc(405px - 1.5em);
+}
+[itemprop="organizer"] {
+	grid-area: organizer;
+}
+[itemprop="role"] {
+	grid-area: role;
+}
+.time {
+	grid-area: period;
+}
+.summaries {
+	grid-area: summaries;
+	display: flex;
+	flex-direction: column;
+}
+h4 {
+	margin: 0;
+}
+main>section>div>h4 {
+	grid-area: heading;
+	align-self: end;
+}
+.realisations {
+	grid-area: titles;
+}
+/** */
+footer {
+	grid-area: footer;
+	align-self: end;
+	padding-bottom: 1.5em;
+}
+h3, h4 {
+	margin: 0;
+}
+h4 {
+	font-weight: normal;
+	font-style: italic;
+}
+p {
+	margin: 0;
+}

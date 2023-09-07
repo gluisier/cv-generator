@@ -1,4 +1,4 @@
-<h2>{{ 'app.hobbies.heading'|trans({'count': entities.count}) }}</h2>
+<div class="h2"><span class="spacer"></span><h2>{{ 'app.hobbies.heading'|trans({'count': entities.count}) }}</h2><span class="spacer"></span></div>
 {% for hobby in entities %}
 	{% include 'hobby/show_cv.html.twig' with {'entity': hobby} %}
 {% endfor %}

@@ -3,7 +3,7 @@ app:
   old_browser: Ce navigateur n'est plus maintenu. Je vous conseille vivement de le mettre à jour ou d'utiliser une alternative
   person:
     age: "{age} ans"
-    details: Pour des raisons techniques, ceci est une version PDF d'une page web. Vous voulez voir l'original, potentiellement plus à jour, ou vous avez besoin des certificats et diplômes ? Téléchargez l'archive à l'adresse
+    details: Pour des raisons techniques, ceci est une version figée d'une page web. Vous voulez voir l'original, potentiellement plus à jour, ou vous avez besoin des certificats et diplômes ? Téléchargez l'archive à l'adresse
     references:
       heading: Références
     updated_on: "Actualisé le <time datetime=\"{iso}\">{date}</time>"

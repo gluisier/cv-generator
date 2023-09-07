@@ -1,4 +1,4 @@
-<h2 class="break-before">{{ 'app.language.heading'|trans({'count': entities.count}) }}</h2>
+<div class="h2"><span class="spacer"></span><h2 class="break-before">{{ 'app.language.heading'|trans({'count': entities.count}) }}</h2><span class="spacer"></span></div>
 {% for language in entities %}
 	{% include 'language/show_cv.html.twig' with {'entity': language} %}
 {% endfor %}

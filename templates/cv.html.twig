@@ -3,9 +3,18 @@
 {% block title %}{{ me.fullName }} ~ {{ 'app.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
-{% include 'style.css.twig' %}
+<style title="Main layout">
+<!--/*--><![CDATA[/*><!--*/
+{% include 'layout.css' %}
+/*]]>*/-->
+</style>
+<style title="Screen">
+<!--/*--><![CDATA[/*><!--*/
+{% include 'screen.css' %}
+/*]]>*/-->
+</style>
 {% if action == 'edit' %}
-<style type="text/css">
+<style>
 dialog {
 	border: 0px none transparent;
 	color: inherit;
@@ -24,8 +33,8 @@ dialog {
 {% block javascripts %}
 {% include 'javascript.js.twig' %}
 {% if action == 'edit' %}
-<script>/*<[CDATA[*/
-/*]]*/</script>
+<script><!--//--><![CDATA[//><!--
+//--><!]]></script>
 
 {% endif %}
 {% endblock %}
@@ -39,62 +48,67 @@ Pwetpwettralala
 </dialog>
 
 {% endif %}
-<header class="vcard p-contact h-card">
-	<div class="half left">
-		<h1 id="Name" class="fn p-name" itemprop="name"{% if action == 'edit' %} data-name="person[fullName]"{% endif %}>{{ me.fullName }}</h1>
-		<h2 class="category" itemprop="jobTitle"{% if action == 'edit' %} data-name="person[position]"{% endif %}>{{ me.position }}</h2>
-		<p><time class="bday dt-bday" datetime="{{ me.birthDate|date('Y-m-d') }}" itemprop="birthDate"{% if action == 'edit' %} data-name="person[birthDate]"{% endif %}>{{ me.birthDate|date('d.m.Y') }}</time> ({{ 'app.person.age'|trans({'age': me.age}) }}) – <span itemprop="nationality"{% if action == 'edit' %} data-name="person[nationality]"{% endif %}>{{ me.nationality }}</span> – {% if action == 'edit' %}<span data-name="person[maritalStatus]">{% endif %}{{ me.maritalStatus }}{% if action == 'edit' %}</span>{% endif %}</p>
-	</div>
-	<div class="half right">
-		<address class="adr p-adr" itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress">
+<img src="data:image/jpeg;base64," alt="Portrait" title="Portrait" id="Portrait" class="photo" />
+<div id="Lead">
+	<h1 id="Name" class="fn p-name" itemprop="name"{% if action == 'edit' %} data-name="person[fullName]"{% endif %}>{{ me.fullName }}</h1>
+	<h2 class="category" itemprop="jobTitle"{% if action == 'edit' %} data-name="person[position]"{% endif %}>{{ me.position }}</h2>
+	<blockquote class="summary"{% if action == 'edit' %} data-name="person[summary]"{% endif %}>
+		{{- me.summary|nl2br -}}
+	</blockquote>
+</div>
+<aside>
+	<p><time class="bday dt-bday" datetime="{{ me.birthDate|date('Y-m-d') }}" itemprop="birthDate"{% if action == 'edit' %} data-name="person[birthDate]"{% endif %}>{{ me.birthDate|date('d.m.Y') }}</time> ({{ 'app.person.age'|trans({'age': me.age}) }}) – <span itemprop="nationality"{% if action == 'edit' %} data-name="person[nationality]"{% endif %}>{{ me.nationality }}</span> – {% if action == 'edit' %}<span data-name="person[maritalStatus]">{% endif %}{{ me.maritalStatus }}{% if action == 'edit' %}</span>{% endif %}</p>
+
+	<section id="Contact">
+		<div class="h2"><span class="spacer start" ></span><h2>Coordonnées</h2><span class="spacer end"></span></div>
+		<address id="Address" class="adr p-adr" itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress">
+			<i class="fa-solid fa-location-dot"></i>
 			<span class="street-address p-street-address" itemprop="streetAddress"{% if action == 'edit' %} data-name="person[address][street]"{% endif %}>{{ me.address.street }}</span>
-			{#-}<img src="data:image/jpeg;base64," alt="Portrait" title="Portrait" class="right photo" />{#}<br />
+			–
 			<span class="postal-code p-postal-code" itemprop="postalCode"{% if action == 'edit' %} data-name="person[address][postalCode]"{% endif %}>{{ me.address.postalCode }}</span> <span class="locality p-locality" itemprop="addressLocality"{% if action == 'edit' %} data-name="person[address][city]"{% endif %}>{{ me.address.city }}</span>
 		</address>
-		<p class="tel p-tel" itemprop="telephone"{% if action == 'edit' %} data-name="person[phone]"{% endif %}>{{ me.phone }}</p>
-		<p class="email u-email" itemprop="email"{% if action == 'edit' %} data-name="person[email]"{% endif %}>{{ me.email }}</p>
-	</div>
-</header>
-<blockquote class="summary"{% if action == 'edit' %} data-name="person[summary]"{% endif %}>
-<span>{{ me.summary|nl2br }}</span><br class="noscreen" />
-<br class="noscreen" />
-<span class="noscreen">{{ 'app.person.details'|trans }}<br />
-<a href="{{ application_file.url }}">{{ application_file.text }}</a></span>
-</blockquote>
+		<p id="Phone" class="tel p-tel" itemprop="telephone"{% if action == 'edit' %} data-name="person[phone]"{% endif %}><i class="fa-solid fa-phone fa-rotate-by" style="--fa-rotate-angle: 25deg;"></i> {{ me.phone }}</p>
+		<p id="Email" class="email u-email" itemprop="email"{% if action == 'edit' %} data-name="person[email]"{% endif %}><i class="fa-solid fa-envelope"></i> {{ me.email }}</p>
+		<p class="noscreen"><i class="fa-solid fa-globe"></i> {{ 'app.person.details'|trans }}<br />
+			<a href="{{ application_file.url }}">{{ application_file.text }}</a></p>
+	</section>
 
-<section id="ComputerScience" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-{% include 'skill/index_cv.html.twig' with {'entities': me.skills} %}
-</section>
+	<section id="ComputerScience" itemscope="itemscope" itemtype="http://schema.org/ItemList">
+		{% include 'skill/index_cv.html.twig' with {'entities': me.skills} %}
+	</section>
 
-{% if me.experiences.count %}
-<section id="Career" class="vcalendar experience">
-{% include 'experience/index_cv.html.twig' with {'entities': me.experiences} %}
-</section>
-{% endif %}
+	{% if me.languages.count %}
+	<section id="Languages" itemscope="itemscope" itemtype="http://schema.org/ItemList">
+	{% include 'language/index_cv.html.twig' with {'entities': me.languages} %}
+	</section>
+	{% endif %}
 
-{% if me.trainings.count %}
-<section id="Training" class="vcalendar education">
-{% include 'training/index_cv.html.twig' with {'entities': me.trainings} %}
-</section>
-{% endif %}
+	{% if me.hobbies.count %}
+	<section id="Hobbies" class="section">
+	{% include 'hobby/index_cv.html.twig' with {'entities': me.hobbies} %}
+	</section>
+	{% endif %}
+</aside>
 
-{% if me.languages.count %}
-<section id="Languages" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-{% include 'language/index_cv.html.twig' with {'entities': me.languages} %}
-</section>
-{% endif %}
+<main>
+	{% if me.experiences.count %}
+	<section id="Career" class="vcalendar experience">
+	{% include 'experience/index_cv.html.twig' with {'entities': me.experiences} %}
+	</section>
+	{% endif %}
 
-{% if me.referrals.count %}
-<section id="References" class="section">
-{% include 'person/index_references.html.twig' with {'entities': me.referrals} %}
-</section>
-{% endif %}
+	{% if me.trainings.count %}
+	<section id="Training" class="vcalendar education">
+	{% include 'training/index_cv.html.twig' with {'entities': me.trainings} %}
+	</section>
+	{% endif %}
 
-{% if me.hobbies.count %}
-<section id="Hobbies" class="section">
-{% include 'hobby/index_cv.html.twig' with {'entities': me.hobbies} %}
-</section>
-{% endif %}
+	{% if me.referrals.count %}
+	<section id="References" class="section">
+	{% include 'person/index_references.html.twig' with {'entities': me.referrals} %}
+	</section>
+	{% endif %}
+</main>
 
 <footer>
 	<div>{{ 'app.person.updated_on'|trans({'iso': 'now'|date('Y-m-d'), 'date': 'now'|date('d.m.Y')})|raw }}</div>
