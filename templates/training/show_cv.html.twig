@@ -5,7 +5,7 @@
 			{{- entity.endDate|date('Y') -}}
 		</time></p>
 	<div>
-		{% if entity.what %}<h3 class="what summary"{% if action == 'edit' %} data-name="experience[what]"{% endif %}>{{ entity.what }}</h3>{% endif %}
+		{% if entity.role %}<h3 class="what summary"{% if action == 'edit' %} data-name="experience[what]"{% endif %}>{{ entity.role }}</h3>{% endif %}
 		<p class="middle" itemprop="organizer" itemscope="itemscope" itemtype="http://schema.org/Organization"{% if action == 'edit' %} data-uri="{{ path('company_edit', {'id': entity.company.id}) }}"{% endif %}>
 			{%- if entity.company.link -%}
 				<a href="{{ entity.company.link }}" title="{{ 'app.company.link.title'|trans }}" itemprop="legalName url"{% if action == 'edit' %} data-name="company[name]"{% endif %}>

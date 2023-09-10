@@ -14,7 +14,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\SoftDeleteable(fieldName: "deletedAt", hardDelete: false)]
 class Task
 {
-    #[ORM\Id()]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 

@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[Gedmo\SoftDeleteable(fieldName: "deletedAt", hardDelete: false)]
 class Experience
 {
-    #[ORM\Id()]
+    #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "NONE")]
     #[ORM\Column]
     private string $id;
@@ -25,9 +25,13 @@ class Experience
     #[ORM\Column(type: "date", nullable: true)]
     private ?\DateTimeInterface $endDate = null;
 
+    #[ORM\Column]
+    #[Gedmo\Translatable]
+    private string $role;
+
     #[ORM\Column(type: "text")]
     #[Gedmo\Translatable]
-    private string $what;
+    private string $genericSummary;
 
     #[ORM\ManyToOne(targetEntity: Company::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -95,14 +99,26 @@ class Experience
         return $this;
     }
 
-    public function getWhat(): ?string
+    public function getRole(): ?string
     {
-        return $this->what;
+        return $this->role;
     }
 
-    public function setWhat(string $what): self
+    public function setRole(string $role): self
     {
-        $this->what = $what;
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getGenericSummary(): ?string
+    {
+        return $this->genericSummary;
+    }
+
+    public function setGenericSummary(string $genericSummary): self
+    {
+        $this->genericSummary = $genericSummary;
 
         return $this;
     }

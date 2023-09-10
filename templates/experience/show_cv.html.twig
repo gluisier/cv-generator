@@ -11,7 +11,7 @@
 			{% endif -%}
 		</time></p>
 	<div>
-		<h3 class="what summary p-name" itemprop="description rolename"{% if action == 'edit' %} data-name="realisation[what]"{% endif %}>{{ entity.what|raw }}</h3>
+		<h3 class="what summary p-name" itemprop="description rolename"{% if action == 'edit' %} data-name="realisation[what]"{% endif %}>{{ entity.role|raw }}</h3>
 		<p class="middle" itemprop="organizer" itemscope="itemscope" itemtype="http://schema.org/Organization"{% if action == 'edit' %} data-uri="{{ path('company_edit', {'id': entity.company.id}) }}"{% endif %}>
 			{%- if entity.company.link -%}
 				<a href="{{ entity.company.link }}" title="{{ 'app.company.link.title'|trans }}" class="p-fn p-org u-url" itemprop="legalName url"{% if action == 'edit' %} data-name="company[name]"{% endif %}>
