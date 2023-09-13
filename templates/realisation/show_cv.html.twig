@@ -1,13 +1,12 @@
-<details open="open" class="what p-achievement"{% if action == 'edit' %} data-uri="{{ path('realisation_edit', {'id': entity.id}) }}"{% endif %}>
-	<summary class="summary p-summary">
+<details open="open" class="p-achievement"{% if action == 'edit' %} data-uri="{{ path('realisation_edit', {'id': entity.id}) }}"{% endif %}>
+	<summary class="summary p-summary"><h5{% if action == 'edit' %} data-name="realisation[name]"{% endif %}>
+		{{- entity.name -}}
+		</h5>
 		{% if entity.link %}
-		<a href="{{ entity.link }}" title="{{ 'app.realisation.link.title'|trans }}"{% if action == 'edit' %} data-name="realisation[name]"{% endif %}>
-		   {{- entity.name -}}
+		<a href="{{ entity.link }}" title="{{ 'app.realisation.link.title'|trans }}" target="_blank"{% if action == 'edit' %} data-name="realisation[name]"{% endif %}>
+		   <i class="fa-solid fa-external-link-alt fa-xs"></i>
 		</a>
 		{% else %}
-			{% if action == 'edit' %}<span data-name="realisation[name]">{% endif %}
-			{{- entity.name -}}
-			{% if action == 'edit' %}</span>{% endif %}
 		{% endif %}
 	</summary>
 	{% if entity.tasks|length -%}

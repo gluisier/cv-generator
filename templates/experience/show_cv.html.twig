@@ -1,16 +1,15 @@
 <div id="{{ entity.id }}" class="vevent p-experience h-event" itemprop="worksFor" itemscope="itemscope" itemtype="http://schema.org/Event http://schema.org/Role">
 	<p itemprop="organizer" itemscope="itemscope" itemtype="http://schema.org/Organization"{% if action == 'edit' %} data-uri="{{ path('company_edit', {'id': entity.company.id}) }}"{% endif %}>
-		{%- if entity.company.link -%}
-			<a href="{{ entity.company.link }}" title="{{ 'app.company.link.title'|trans }}" class="p-fn p-org u-url" itemprop="legalName url"{% if action == 'edit' %} data-name="company[name]"{% endif %}>
-				{{- entity.company.name -}}
-			</a>
-		{%- else -%}
-			<span itemprop="legalName" class="p-fn p-org"{% if action == 'edit' %} data-name="company[name]"{% endif %}>
-				{{- entity.company.name -}}
-			</span>
-		{%- endif -%}
+		<span itemprop="legalName" class="p-fn p-org"{% if action == 'edit' %} data-name="company[name]"{% endif %}>
+			{{- entity.company.name -}}
+		</span>
+		{% if entity.company.link -%}
+			<a href="{{ entity.company.link }}" title="{{ 'app.company.link.title'|trans }}" class="p-fn p-org u-url" itemprop="legalName url" target="_blank"
+					{%- if action == 'edit' %} data-name="company[name]"{% endif -%}
+				><i class="fa-solid fa-external-link-alt"></i></a>
+		{% endif -%}
 	</p>
-	<h3 class="what summary p-name" itemprop="description rolename"{% if action == 'edit' %} data-name="realisation[what]"{% endif %}>{{ entity.role|raw }}</h3>
+	<h3 class="summary p-name" itemprop="description rolename"{% if action == 'edit' %} data-name="realisation[what]"{% endif %}>{{ entity.role|raw }}</h3>
 	<p class="time"><time class="dtstart dt-start" datetime="{{ entity.startDate|date('Y-m-d') }}" itemprop="startDate"{% if action == 'edit' %} data-name="experience[startDate]"{% endif %}>
 			{{- entity.startDate|format_date(pattern='MMM')|title }}
 			{%- if (entity.startDate|date('Y') != entity.endDate|default('now')|date('Y')) %} {{ entity.startDate|date('Y') }}{% endif -%}
@@ -23,12 +22,10 @@
 			{% endif -%}
 		</time></p>
 	<div class="summaries">
-		<div>{{ entity.genericSummary }}</div>
+		{{- entity.genericSummary|nl2br -}}
 	</div>
 	{#-<p class="place location p-location right" itemprop="location"{% if action == 'edit' %} data-name="company[address][city]"{% endif %}>{{ entity.company.address.city }}</p>#}
 	{% if entity.realisations.count %}
-	<div class="realisations">
-		{% include 'realisation/index_cv.html.twig' with {'entities': entity.realisations} %}
-	</div>
+	{% include 'realisation/index_cv.html.twig' with {'entities': entity.realisations} %}
 	{% endif %}
 </div>

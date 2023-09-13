@@ -6,11 +6,9 @@
 <style title="Main layout">
 <!--/*--><![CDATA[/*><!--*/
 {% include 'layout.css' %}
-/*]]>*/-->
-</style>
-<style title="Screen">
-<!--/*--><![CDATA[/*><!--*/
-{% include 'screen.css' %}
+@media print {
+{% include 'print.css' %}
+}
 /*]]>*/-->
 </style>
 {% if action == 'edit' %}
@@ -60,7 +58,7 @@ Pwetpwettralala
 	<p><time class="bday dt-bday" datetime="{{ me.birthDate|date('Y-m-d') }}" itemprop="birthDate"{% if action == 'edit' %} data-name="person[birthDate]"{% endif %}>{{ me.birthDate|date('d.m.Y') }}</time> ({{ 'app.person.age'|trans({'age': me.age}) }}) – <span itemprop="nationality"{% if action == 'edit' %} data-name="person[nationality]"{% endif %}>{{ me.nationality }}</span> – {% if action == 'edit' %}<span data-name="person[maritalStatus]">{% endif %}{{ me.maritalStatus }}{% if action == 'edit' %}</span>{% endif %}</p>
 
 	<section id="Contact">
-		<div class="h2"><span class="spacer start" ></span><h2>Coordonnées</h2><span class="spacer end"></span></div>
+		<div class="h2"><span class="spacer" ></span><h2>Coordonnées</h2><span class="spacer"></span></div>
 		<address id="Address" class="adr p-adr" itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress">
 			<i class="fa-solid fa-location-dot"></i>
 			<span class="street-address p-street-address" itemprop="streetAddress"{% if action == 'edit' %} data-name="person[address][street]"{% endif %}>{{ me.address.street }}</span>

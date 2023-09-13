@@ -1,4 +1,5 @@
-<script><!--//--><![CDATA[//><!--
+<script>
+<!--//--><![CDATA[//><!--
 window.addEventListener('DOMContentLoaded', (event) => {
 	const hiddenParts = document.querySelectorAll('#ComputerScience [hidden]');
 	for (hiddenPart of hiddenParts) {
@@ -77,14 +78,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	for (detail of details) {
 		detail.open = false;
 	}
-	const content = document.querySelectorAll('#Career p.middle, #Career details.what>summary, #Training .middle');
+	const content = document.querySelectorAll('main .titles, main .titles *, #Training .vevent>div>p');
 	const footnoteContainer = document.getElementById('Footnotes');
 	const abbreviations = JSON.parse(footnoteContainer.dataset.abbreviations);
 	if (!footnoteContainer.children.length) {
 		for (const index in abbreviations) {
 			const abbreviation = abbreviations[index];
 			const regex = new RegExp('(' + abbreviation.short + ')(?!<sup)');
-			const replacement = '<abbr title="' + abbreviation.description + '">$1<sup class="c_fn">' + (1 + parseInt(index, 10)) + '</sup></abbr>';
+			const replacement = '<abbr title="' + abbreviation.description + '">$1<sup class="noscreen"><a href="#' + abbreviation.short + '">' + (1 + parseInt(index, 10)) + '</a></sup></abbr>';
 			const footnote = '<p><sup>' + (1 + parseInt(index, 10)) + '</sup> ' + abbreviation.description + '</p>';
 			footnoteContainer.innerHTML = footnoteContainer.innerHTML + footnote;
 			for (const place of content) {
@@ -96,5 +97,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
 			}
 		}
 	}
+	document.querySelectorAll('details.p-achievement').forEach((element) => {
+		element.addEventListener('toggle', (event) => {
+			const mainContainer = event.target.closest('div[id]');
+			const collapsedContainer = mainContainer.querySelector('.titles');
+			const expandedContainer = mainContainer.querySelector('.realisations');
+			if (event.target.open) {
+				expandedContainer.appendChild(event.target);
+			} else {
+				collapsedContainer.appendChild(event.target);
+			}
+		});
+	})
 })
 //--><!]]></script>

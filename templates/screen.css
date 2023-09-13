@@ -39,6 +39,9 @@ main {
 	background-color: white;
 	color: var(--dark);
 }
+details>::marker {
+	color: var(--blue);
+}
 footer {
 	z-index: 0;
 }

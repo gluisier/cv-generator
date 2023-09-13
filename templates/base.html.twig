@@ -16,7 +16,7 @@
 	{% block javascripts %}
 	{% endblock %}
 </head>
-<body>
+<body class="hresume h-resume">
 <!--[if IE]>
 <div style="width: 100%; background-color: #e4b063; color: black; line-height: 1.2em; padding: 5px 0; text-align: center;">
 {{ 'app.old_browser'|trans }}
@@ -29,7 +29,7 @@
 			</div>
 		{% endfor %}
 	{% endfor %}
-	<div class="hresume h-resume vcard p-contact h-card" itemscope="itemscope" itemtype="http://schema.org/Person"{% if action == 'edit' %} data-uri="{{ path('person_edit', {'id': me.id}) }}"{% endif %}>
+	<div class="vcard p-contact h-card" itemscope="itemscope" itemtype="http://schema.org/Person"{% if action == 'edit' %} data-uri="{{ path('person_edit', {'id': me.id}) }}"{% endif %}>
 		{% block body %}{% endblock %}
 	</div>
 </body>
