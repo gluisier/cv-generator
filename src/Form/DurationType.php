@@ -12,7 +12,7 @@ abstract class DurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('what')
+            ->add('role')
             ->add('startDate', BirthdayType::class)
             ->add('endDate', BirthdayType::class)
             ->add('company', EntityType::class, array(

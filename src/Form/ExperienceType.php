@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Form\DurationType as AbstractType;
 use App\Form\RealisationType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,6 +15,8 @@ class ExperienceType extends AbstractType
     {
         parent::buildForm($builder, $options);
         $builder
+            ->add('genericSummary', TextareaType::class)
+            ->add('fixedTerm')
             ->add('realisations', CollectionType::class, array(
                 'entry_type'   => RealisationType::class,
                 'required'     => false,

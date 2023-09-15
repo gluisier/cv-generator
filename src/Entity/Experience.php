@@ -26,6 +26,9 @@ class Experience
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column]
+    private bool $fixedTerm = false;
+
+    #[ORM\Column]
     #[Gedmo\Translatable]
     private string $role;
 
@@ -95,6 +98,18 @@ class Experience
     public function setEndDate(?\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getFixedTerm(): ?bool
+    {
+        return $this->fixedTerm;
+    }
+
+    public function isFixedTerm(bool $fixedTerm): self
+    {
+        $this->fixedTerm = $fixedTerm;
 
         return $this;
     }
