@@ -65,9 +65,9 @@
 		<div id="{{ reference.id }}">
 			<h3 data-name="person[fullName]">{{ reference.fullName }}</h3>
 			{% if reference.experiences.count %}
-				<p class="middle">{{ reference.experiences[0].what|raw ~ ', ' ~ reference.experiences[0].company.name }}</p>
+				<p>{{ reference.experiences[0].what|raw ~ ', ' ~ reference.experiences[0].company.name }}</p>
 			{% else %}
-				<p class="middle">{{ 'app.experience.none'|trans }}</p>
+				<p>{{ 'app.experience.none'|trans }}</p>
 			{% endif %}
 			{% if reference.email is defined %}<p class="place right" data-name="person[email]">{{ reference.email }}</p>{% endif %}
 			{% if reference.phone is defined %}<p class="place right" data-name="person[phone]">{{ reference.phone }}</p>{% endif %}
@@ -81,7 +81,7 @@
 	{% for hobby in me.hobbies %}
 		<div id="{{ hobby.what|url_encode }}">
 			<h3 data-name="hobby[what]">{{ hobby.what }}</h3>
-			<p class="middle" data-name="hobby[description]">{{ hobby.description|raw }}</p>
+			<p data-name="hobby[description]">{{ hobby.description|raw }}</p>
 		</div>
 	{% endfor %}
 </section>
