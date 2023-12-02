@@ -1,256 +1,339 @@
-<style>
+<style title="Design 2023">
+<!--/*--><![CDATA[/*><!--*/
 body {
-	font-family: Calibri, Arial, Verdana, Helvetica, sans-serif;
-	font-size: 14px;
-	width: 700px;
-	margin: auto;
-	padding-bottom: 13px;
-}
-section>div+div {
-	margin-top: 13px;
-	clear: both;
+	--page-width: 1240px;
+	--image-width: 435px;
+	--middle-column-width: 280px;
+	--space: 1.5em;
+	--half-space: 0.75em;
+	--dark: #3B3A3B;
+	--light: #EAEBEC;
+	--blue: #56C8EA;
+	font-family: "Open Sans", Arial, Verdana, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
 }
 h1 {
-	font-size: 48px;
-	margin: 0 0 18px 0;
+	margin: 0;
+	font-size: 92px;
+	line-height: 1em;
+	width: 200px;
+	letter-spacing: .1em;
 }
 h2 {
-	font-size: 20px;
-	margin-left: 100px;
-	clear: both;
+	color: var(--blue);
+	font-variant: small-caps;
 }
-h1+h2 {
-	margin-top: 20px;
-	margin-left: 0;
+h1, h2, h3, h4 {
+	font-family: Jost, Arial, Verdana, Helvetica, sans-serif;
 }
-h3,h4 {
+blockquote {
 	margin: 0;
+	text-align: justify;
+	font-size: large;
+	line-height: 1.75em;
+}
+div.vcard.h-card {
+	width: var(--page-width);
+	height: var(--page-height);
+	margin: auto;
+	display: grid;
+	grid-template:
+		"image  lead"
+		"aside  main"
+		"footer main" / var(--image-width);
+	background-color: var(--dark);
+}
+img {
+	grid-area: image;
+	width: var(--image-width);
+	aspect-ratio: 1/1;
+	filter: grayscale(1);
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+#Lead {
+	grid-area: lead;
+	padding: 1.5em;
+}
+#Lead h2 {
+	font-size: 40px;
+}
+img, #Lead {
+	color: var(--dark);
+	background-color: var(--light);
+}
+aside, footer {
+	padding-left: var(--space);
+	width: var(--image-width);
+	grid-area: aside;
+	box-sizing: border-box;
+	color: white;
+}
+p {
+	margin: 0;
+}
+.h2 {
+	display: flex;
+	align-items: center;
+}
+.h2 h2 {
+	padding: 0 .5rem;
+	font-weight: normal;
+}
+.spacer {
+	flex-basis: 0;
+	flex-grow: 1;
+	border-bottom: 0.15em solid white;
+}
+aside>p:first-of-type {
+	text-align: center;
+	margin-top: 0.175em;
+}
+address {
+	font-style: normal;
+}
+aside>section>*:not(.h2) {
+	margin-right: var(--space);
+}
+#Contact > address + p, #Contact > p + p {
+	margin-top: var(--half-space);
+}
+#Contact i {
+	margin-right: 1em;
+	color: var(--blue);
+}
+a {
+	color: var(--blue);
+}
+form {
+	background-color: #ffffff0a;
+}
+ul {
+	margin: 0;
+}
+input[type="search"] {
+	width: 100%;
+	border: 1px solid var(--blue);
+}
+#ComputerScience ul {
+	padding: 0;
+}
+#ComputerScience li {
+	list-style: none;
+}
+#ComputerScience li:not([hidden]) {
+	display: inline-block;
+}
+#ComputerScience li>input {
+	margin: 0 0 0 0.5em;
+}
+#ComputerScience li>label {
+	padding: 0 0.5em;
+}
+#Languages>div[id] {
+	display: flex;
+	flex-wrap: wrap;
+}
+#Languages>div[id] + div[id] {
+	margin-top: var(--half-space);
+}
+#Languages>div[id] h3 + p {
+	margin-left: auto;
+	align-self: center;
+}
+#Languages>div[id] h3 + p + p {
+	text-align: justify;
+	font-size: small;
+}
+#Hobbies>[id] + div[id] {
+	margin-top: var(--half-space);
+}
+main {
+	grid-area: main;
+	padding: 0 var(--space) var(--space);
+	box-sizing: border-box;
+	background-color: white;
+	color: var(--dark);
+}
+main h2 {
+	padding-bottom: calc(var(--half-space) / 3);
+	border-bottom: 0.1em solid transparent;
+	border-image: linear-gradient(to right, transparent, transparent var(--space), var(--blue) var(--space)) 1;
+}
+.p-experience {
+	display: grid;
+	grid-template:
+		"organizer    role"
+		"period       summaries"
+		"titles       summaries"
+		"realisations realisations" / var(--middle-column-width);
+	column-gap: 1em;
+}
+.p-experience + .p-experience {
+	margin-top: var(--half-space);
+}
+abbr {
+	display: inline !important;
+}
+[itemprop="organizer"] {
+	grid-area: organizer;
+	align-self: first baseline;
+}
+[itemprop="role"] {
+	grid-area: role;
+	align-content: first baseline;
+}
+.time {
+	grid-area: period;
+	font-size: small;
+}
+.summaries {
+	grid-area: summaries;
+	display: flex;
+	flex-direction: column;
+	font-size: small;
+}
+h4 {
+	margin: 0;
+}
+.titles {
+	grid-area: titles;
+	align-self: end;
+}
+.realisations {
+	grid-area: realisations;
+}
+details>details {
+	margin-left: var(--half-space);
+}
+.p-achievement ul {
+	padding-left: 1em;
 }
 h4 {
 	font-weight: normal;
 	font-style: italic;
 }
-p {
+h5 {
+	display: inline-block;
+	font-weight: normal;
+	font-size: small;
+}
+h3, h4, h5 {
 	margin: 0;
 }
-section div>.first-column {
-	width: 130px;
-	font-size: 14px;
-	margin: 0;
-}
-.middle:not(h3,h4) {
-	display: inline;
-}
-.middle:not(h3,h4,#References p) {
-	margin: 0 0 0 2.5em;
+summary.p-summary + * {
+	font-size: small;
+	border: 2px solid #0000;
+	border-image: radial-gradient(at 50% 0, white 70%, var(--blue)) 10;
 }
 .technologies {
+	font-size: x-small;
 	font-style: italic;
 }
-.short {
-	display: inline-block;
-	width: 70px;
-	margin: 0;
+#Training .vevent, #References>div {
+	display: grid;
+	grid-template-columns: calc(var(--image-width) / 2) auto;
 }
-.what:not(h3,h4) {
-	margin: 0 0 0 2.5em;
+#Training .vevent>div>p {
+	font-size: small;
 }
-.smaller {
-	font-size: smaller;
-	display: inline-block;
-	margin: 0;
-}
-sup {
-	vertical-align: top;
-}
-header {
-	display: block;
-	text-align: center;
-	height: auto;
-	clear: both;
-	font-size: 18px;
-}
-header p, header address {
-	float: none !important;
-	margin: 1em 0 !important;
-	width: auto !important;
-}
-header .half.left {
-	width: 60%;
-}
-header .half.right {
-	width: 40%;
-}
-div.left p, div.right p {
-	float: left;
-	margin: 0;
-	width: 130px;
-}
-address {
-	font-style: normal;
-}
-blockquote {
-	clear: both;
-	text-align: center;
-	margin: 1em 0;
+#Training .vevent + .vevent, #References>div + div {
+	margin-top: var(--half-space);
 }
 footer {
-	display: block;
-	margin-top: 0.83em;
-}
-#ComputerScience ul {
-	list-style-type: none;
-	padding-left: 0;
-	column-count: 4;
-	width: 100%;
-	column-rule: 1px dotted;
-	column-gap: 3px;
-	padding-left: 0;
-}
-#ComputerScience input[disabled], #ComputerScience input[disabled]+label {
-	cursor: not-allowed;
-}
-#ComputerScience div>form>input {
-	width: 100%;
-	border-radius: 1em;
-	border: 0px none transparent;
-	padding: 0.25em;
-	margin: 0.5em auto 0;
-	text-align: center;
-}
-.half {
-	width: 50%;
-	height: 100%;
-}
-.right {
-	display: block;
-	float: right;
-}
-.left {
-	display: block;
-	float: left;
-}
-.right + .right {
-	clear: both;
-	height: auto;
-}
-section > div:not(.container) {
-	display: flex;
-	flex-direction: row;
-	align-items: baseline;
-}
-section > div:not(.container) > div {
-	width: 570px;
-}
-.place {
-	width: 208px;
-	margin: 0 0 0 auto;
-}
-.clearer {
-	width: 100%;
-	height: 0;
-	clear: both;
-}
-details > details {
-	margin-left: 1em;
-}
-details > ul {
-	margin-top: 0;
-	padding-left: 1em;
-}
-summary {
-	text-indent: -1em;
+	grid-area: footer;
+	align-self: end;
+	padding-bottom: var(--space);
+	font-size: small;
 }
 @media screen {
-body {
-	background-color: #2c456e;
-	background-image: repeating-linear-gradient(135deg, #2c456e 0%, #2f4a75 5%, #2c456e 10%);
-	color: #3299cc;
+input[type="search"] {
+	animation: zoom 1s 2 1s alternate;
+	transform-origin: bottom left;
 }
-h1, h1+h2 {
-	color: #e4b063;
-}
-h2 {
-	color: #36ad2e;
-}
-.container {
-	padding: 3px;
-}
-a {
-	color: #3299cc;
-}
-sup {
-	display: none;
+@keyframes zoom {
+	to {
+		transform: scale(2);
+	}
 }
 .noscreen {
 	display: none !important;
 }
-span[title], p[title]:not(.tel), h4[title] {
-	border-bottom: 1px dotted;
+#ComputerScience li:not(:first-of-type) + li {
+	border-left: 1px solid;
 }
-.selected, .container {
-	background-color: #3a5c9233;
-	border-radius: 5px;
+details>::marker {
+	font: var(--fa-font-solid);
+	color: var(--blue);
+	content: '\f06e ';
+	font-size: small;
 }
-noscript {
-	color: red;
-	display: block;
-	text-align: center;
-	width: 100%;
+details[open]>::marker {
+	font: var(--fa-font-solid);
+	content: '\f070 ';
+	font-size: small;
 }
-#ComputerScience div>form>input {
-	animation-name: blink;
-	animation-duration: 2s;
-	animation-iteration-count: 3;
-}
-@keyframes blink {
-	0% {
-		background-color: white;
-	}
-	50% {
-		background-color: #fcc;
-	}
-	100% {
-		background-color: white;
-	}
+abbr[title] {
+	text-decoration: dotted underline;
 }
 }
 @media print {
+@page {
+	size: 1240px  1754px; /* @150 DPI */
+	margin: 1.5em 0 1.5em 0 !important;
+}
+@page:first {
+	margin-top: 0 !important;
+}
 body {
-	color: #777777 !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
-h1 {
-	color: black;
+img, #Lead {
+	background-color: white;
 }
-h2 {
-	margin: 0.5em 0  0.5em 100px;
-}
-section>h2 {
-	page-break-after: avoid;
-}
-h3 {
-	page-break-before: avoid;
-	page-break-after: avoid;
-}
-.half, .section, .vcard {
+div.vcard.h-card {
 	page-break-inside: avoid;
-	page-break-before: avoid;
+	background-color: white;
 }
-.vevent>p {
+h1, h2, h3, h4, h5 {
 	page-break-after: avoid;
 }
-details {
+img, #Lead {
+	page-break-after: avoid;
+}
+aside, footer {
+	color: var(--dark);
+}
+aside, main {
+	page-break-before: avoid;
+	page-break-inside: auto;
+}
+.spacer {
+	border-color: var(--dark);
+}
+#ComputerScience li:not(:first-of-type) + li:not(.noprint) label {
+	border-left: 1px solid;
+}
+section {
+	page-break-inside: auto;
+}
+section > div {
 	page-break-inside: avoid;
+	page-break-before: auto;
+	page-break-after: auto;
+}
+summary {
+	page-break-after: avoid;
+}
+summary summary+* {
+	page-break-inside: auto;
 }
 .noprint {
 	display: none !important;
 }
-#ComputerScience div>form>ul {
-	column-gap: 10px;
 }
-.references p {
-	font-size: smaller;
-	margin: 0;
-}
-}
+/*]]>*/-->
 </style>

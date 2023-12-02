@@ -6,14 +6,16 @@
 	<form action="#">
 		<input type="search" placeholder="{{ 'app.skill.help'|trans }}" class="noprint" hidden="hidden" />
 		<ul>
-			{%~ for skill in entities -%}
+			{%~ apply spaceless %}
+			{% for skill in entities %}
 			<li{% if not skill.selectable %} title="{{ 'app.skill.not_selectable'|trans }}"{% endif %}
 				{%- if loop.first %} class="noprint"{% endif %}>
 				<input type="checkbox" class="noprint" id="{{ skill.name }}" value="{{ skill.name }}" checked="checked" disabled="disabled"
 				{%- if skill.selectable %} data-left="{{ skill.lft }}" data-right="{{ skill.rgt }}"{% endif %} />
-				<label for="{{ skill.name }}" class="p-skill">{{ skill.name }}</label>
+				<label for="{{ skill.name }}" class="p-skill{% if loop.first %} noprint{% endif %}">{{ skill.name }}</label>
 			</li>
-			{% endfor ~%}
+			{% endfor %}
+			{% endapply ~%}
 		</ul>
 	</form>
 </div>

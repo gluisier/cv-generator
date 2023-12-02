@@ -2,6 +2,7 @@ twig:
   default_path: '%kernel.project_dir%/templates'
   globals:
     application_file: '%application_file%'
+    image_source: '%me_image_source%'
 
 when@test:
   twig:

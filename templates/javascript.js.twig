@@ -1,51 +1,53 @@
 <script>
 <!--//--><![CDATA[//><!--
 window.addEventListener('DOMContentLoaded', (event) => {
-	const hiddenParts = document.querySelectorAll('#ComputerScience [hidden]');
-	for (hiddenPart of hiddenParts) {
+	document.querySelectorAll('#ComputerScience [hidden]').forEach((hiddenPart) => {
 		hiddenPart.hidden = false;
-	}
+	})
 	const search = document.querySelector('#ComputerScience input[type="search"]');
 	const skills = document.querySelectorAll('#ComputerScience input[type="checkbox"][data-left]');
 	search.addEventListener('focus', function (e) {
 		if (e.target.value.length < 3) {
-			for (skill of skills) {
+			skills.forEach((skill) => {
 				skill.parentNode.hidden = true;
-			}
+			});
 		}
 	});
 	search.addEventListener('blur', function (e) {
 		if (e.target.value.length < 3) {
-			for (skill of skills) {
+			skills.forEach((skill) => {
 				skill.parentNode.hidden = false;
-			}
+			});
 		}
 	})
 	search.addEventListener('input', function (e) {
 		if (e.target.value.length >= 3) {
 			const regex = new RegExp(e.target.value, 'i');
-			for (skill of skills) {
+			skills.forEach((skill) => {
 				skill.parentNode.hidden = !skill.parentNode.querySelector('label').innerHTML.match(regex);
-			}
+			});
 		} else {
-			for (skill of skills) {
+			skills.forEach((skill) => {
 				skill.parentNode.hidden = true;
-			}
+			});
 		}
 	});
-	for (skill of skills) {
+	skills.forEach((skill) => {
 		skill.addEventListener('change', (event) => {
 			const target = event.target;
 			const left = parseInt(target.dataset.left, 10);
 			const right = parseInt(target.dataset.right, 10);
 			const container = target.parentNode;
 			const checked = target.checked;
+			let hashes = window.location.hash.substr(8).split(',').filter(e => e);
 			if (checked) {
 				container.querySelector('label').classList.remove('noprint');
+				hashes.push(target.value);
 			} else {
 				container.querySelector('label').classList.add('noprint');
+				hashes = hashes.filter(e => e != target.value);
 			}
-			for (child of skills) {
+			skills.forEach((child) => {
 				if (child.dataset.left > left
 					&& child.dataset.right < right
 					&& !child.checked
@@ -57,9 +59,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 						child.parentNode.querySelector('label').classList.add('noprint');
 					}	
 				}
-			}
-			const technologies = document.querySelectorAll('#Career details .technologies>span');
-			for (technology of technologies) {
+			});
+			document.querySelectorAll('#Career details .technologies>span').forEach((technology) => {
 				if (technology.dataset.left >= left
 					&& technology.dataset.right <= right
 				) {
@@ -68,30 +69,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
 						experience.open = checked;
 					}
 				}
+			});
+			hashes = hashes.filter((item, index) => item && (hashes.indexOf(item) == index));
+			if (hashes.length) {
+				window.location.hash = '#skills=' + hashes.sort().join(',');
 			}
 		});
 		skill.disabled = false;
 		skill.checked = false;
 		skill.parentNode.querySelector('label').classList.add('noprint');
-	}
-	const details = document.querySelectorAll('#Career details');
-	for (detail of details) {
-		detail.open = false;
-	}
-	const content = document.querySelectorAll('main .titles, main .titles *, #Training .vevent>div>p');
+	});
+	const content = document.querySelectorAll('h5, main .summaries, #Training .vevent>div>p');
 	const footnoteContainer = document.getElementById('Footnotes');
 	const abbreviations = JSON.parse(footnoteContainer.dataset.abbreviations);
 	if (!footnoteContainer.children.length) {
-		for (const index in abbreviations) {
-			const abbreviation = abbreviations[index];
-			const regex = new RegExp('(' + abbreviation.short + ')(?!<sup)');
-			const replacement = '<abbr title="' + abbreviation.description + '">$1<sup class="noscreen"><a href="#' + abbreviation.short + '">' + (1 + parseInt(index, 10)) + '</a></sup></abbr>';
-			const footnote = '<p><sup>' + (1 + parseInt(index, 10)) + '</sup> ' + abbreviation.description + '</p>';
-			footnoteContainer.innerHTML = footnoteContainer.innerHTML + footnote;
-			for (const place of content) {
+		let displayOrder = 1;
+		for (const place of content) {
+			for (const index in abbreviations) {
+				const abbreviation = abbreviations[index];
+				const regex = new RegExp('(' + abbreviation.short + ')(?!<sup)');
+				const replacement = '<abbr title="' + abbreviation.description + '">$1<sup class="noscreen">' + displayOrder + '</sup></abbr>';
+				const footnote = '<p><sup>' + displayOrder + '</sup> ' + abbreviation.description + '</p>';
 				const newContent = place.innerHTML.replace(regex, replacement);
 				if (place.innerHTML != newContent) {
 					place.innerHTML = newContent;
+					footnoteContainer.innerHTML = footnoteContainer.innerHTML + footnote;
+					delete abbreviations[index];
+					displayOrder++;
 					break;
 				}
 			}
@@ -108,6 +112,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 				collapsedContainer.appendChild(event.target);
 			}
 		});
-	})
+	});
+	document.querySelectorAll('#Career details').forEach((detail) => {
+		detail.open = false;
+		detail.dispatchEvent(new Event('toggle'));
+	});
+	const selectedSkills = window.location.hash.substr(8).split(',').filter(e => e);
+	if (selectedSkills.length) {
+		selectedSkills.forEach((selectedSkill) => {
+			const validSkill = document.getElementById(selectedSkill);
+			if (validSkill) {
+				validSkill.checked = true;
+				validSkill.dispatchEvent(new Event('change', { 'bubbles': true }));
+			}
+		});
+	}
 })
 //--><!]]></script>
