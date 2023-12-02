@@ -20,7 +20,9 @@
 			{% else %}
 				{{- 'app.experience.now'|trans -}}
 			{% endif -%}
-		</time></p>
+		</time>
+		<small>({% if entity.fixedTerm %}{{ 'app.experience.temporary'|trans }}, {% endif -%}
+			{{- 'app.experience.duration'|trans({'years': entity.duration.y, 'months': entity.duration.m})|trim }})</small></p>
 	<div class="summaries">
 		{{- entity.genericSummary|nl2br -}}
 	</div>

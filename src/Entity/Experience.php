@@ -58,7 +58,7 @@ class Experience
     private $translations;
 
     #[ORM\Column(type: "datetime", nullable: true)]
-    private \DateTimeInterface $deletedAt;
+    private ?\DateTimeInterface $deletedAt;
 
     public function __construct()
     {
@@ -244,5 +244,19 @@ class Experience
         }
 
         return $this;
+    }
+
+    public function getDuration(): \DateInterval
+    {
+        $startDate = clone $this->startDate;
+        if ($this->endDate) {
+            $endDate = clone $this->endDate;
+        } else {
+            $endDate = new \DateTime();
+        }
+        $startDate->modify('first day of this month');
+        $endDate->modify('+5 days');
+
+        return $endDate->diff($startDate);
     }
 }

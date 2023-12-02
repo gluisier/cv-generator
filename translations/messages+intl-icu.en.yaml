@@ -3,6 +3,7 @@ app:
   old_browser: This browser is no longer maintained. I strongly suggest to update it or use an alternative
   person:
     age: "{age} years old"
+    contact: Contact details
     details: For technical reasons, this is a frozen version of a web page. Want to see the original and more up to date applicant file, or you need certificates and diplomas? Download the archive at
     references:
       heading: References
@@ -18,6 +19,17 @@ app:
   experience:
     heading: Work experience
     now: current
+    temporary: temporary
+    duration:  >-
+      {years, plural,
+        =0 {}
+        one { # year}
+        other { # years}
+      }{months, plural,
+        =0 {}
+        one { # month}
+        other { # months}
+      }
   realisation:
     heading: Achievements
     link:
