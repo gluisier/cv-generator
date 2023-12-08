@@ -296,20 +296,25 @@ img, #Lead {
 }
 div.vcard.h-card {
 	page-break-inside: avoid;
+	break-inside: avoid;
 	background-color: white;
 }
 h1, h2, h3, h4, h5 {
 	page-break-after: avoid;
+	break-after: avoid;
 }
 img, #Lead {
 	page-break-after: avoid;
+	break-after: avoid;
 }
 aside, footer {
 	color: var(--dark);
 }
 aside, main {
 	page-break-before: avoid;
+	break-before: avoid;
 	page-break-inside: auto;
+	break-inside: auto;
 }
 .spacer {
 	border-color: var(--dark);
@@ -319,17 +324,33 @@ aside, main {
 }
 section {
 	page-break-inside: auto;
+	break-inside: auto;
 }
 section > div {
-	page-break-inside: avoid;
 	page-break-before: auto;
+	break-before: auto;
 	page-break-after: auto;
+	break-after: auto;
+}
+.summaries {
+	page-break-inside: avoid;
+	break-inside: avoid;
+}
+.realisations {
+	page-break-inside: auto;
+	break-inside: auto;
+}
+.p-achievement {
+	page-break-after: auto;
+	break-after: auto;
 }
 summary {
 	page-break-after: avoid;
+	break-after: avoid;
 }
 summary summary+* {
 	page-break-inside: auto;
+	break-inside: auto;
 }
 .noprint {
 	display: none !important;
