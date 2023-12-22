@@ -1,4 +1,0 @@
-<h2>{{ 'app.person.references.heading'|trans({'count': entities.count} ) }}</h2>
-{% for reference in entities %}
-	{% include 'person/show_reference.html.twig' with {'entity': reference} %}
-{% endfor %}

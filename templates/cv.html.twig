@@ -65,18 +65,57 @@ Pwetpwettralala
 	</section>
 
 	<section id="ComputerScience" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-		{% include 'skill/index_cv.html.twig' with {'entities': me.skills} %}
+		<div class="h2"><span class="spacer"></span><h2>{{ 'app.skill.heading'|trans }}</h2><span class="spacer"></span></div>
+		<div class="container">
+			<noscript class="noprint">
+				{{ 'app.skill.noscript'|trans }}
+			</noscript>
+			<form action="#">
+				<input type="search" placeholder="{{ 'app.skill.help'|trans }}" class="noprint" hidden="hidden" />
+				<ul>
+					{%~ apply spaceless %}
+					{% for skill in me.skills %}
+					<li{% if not skill.selectable %} title="{{ 'app.skill.not_selectable'|trans }}"{% endif %}
+						{%- if loop.first %} class="noprint"{% endif %}>
+						<input type="checkbox" class="noprint" id="{{ skill.name }}" value="{{ skill.name }}" checked="checked" disabled="disabled"
+						{%- if skill.selectable %} data-left="{{ skill.lft }}" data-right="{{ skill.rgt }}"{% endif %} />
+						<label for="{{ skill.name }}" class="p-skill{% if loop.first %} noprint{% endif %}">{{ skill.name }}</label>
+					</li>
+					{% endfor %}
+					{% endapply ~%}
+				</ul>
+			</form>
+		</div>
 	</section>
 
 	{% if me.languages.count %}
 	<section id="Languages" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-	{% include 'language/index_cv.html.twig' with {'entities': me.languages} %}
+		<div class="h2"><span class="spacer"></span><h2 class="break-before">{{ 'app.language.heading'|trans({'count': me.languages.count}) }}</h2><span class="spacer"></span></div>
+		{% for language in me.languages %}
+		<div id="{{ language.code }}"{% if action == 'edit' %} data-uri="{{ path('language_edit', {'code': language.code}) }}"{% endif %}>
+			<h3 itemprop="itemListElement"{% if action == 'edit' %} data-name="language[code]"{% endif %}>{{ ('app.language.' ~ language.code)|trans }}</h3>
+			<p{% if action == 'edit' %} data-name="language[level]"{% endif %}>
+				{{- language.level -}}
+			</p>
+			{% if language.meaning is not null -%}
+			<p{% if action == 'edit' %} data-name="language[meaning]"{% endif %}>
+				{{- language.meaning -}}
+			</p>
+			{%- endif -%}
+		</div>
+		{% endfor %}
 	</section>
 	{% endif %}
 
 	{% if me.hobbies.count %}
 	<section id="Hobbies" class="section">
-	{% include 'hobby/index_cv.html.twig' with {'entities': me.hobbies} %}
+		<div class="h2"><span class="spacer"></span><h2>{{ 'app.hobbies.heading'|trans({'count': me.hobbies.count}) }}</h2><span class="spacer"></span></div>
+		{% for hobby in me.hobbies %}
+		<div id="{{ hobby.what|url_encode }}">
+			<h3>{{ hobby.what }}</h3>
+			<p>{{ hobby.description|raw }}</p>
+		</div>
+		{% endfor %}
 	</section>
 	{% endif %}
 </aside>
@@ -84,19 +123,156 @@ Pwetpwettralala
 <main>
 	{% if me.experiences.count %}
 	<section id="Career" class="vcalendar experience" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-	{% include 'experience/index_cv.html.twig' with {'entities': me.experiences} %}
+		<h2>{{ 'app.experience.heading'|trans }}</h2>
+		{% for experience in me.experiences %}
+		<div id="{{ experience.id }}" class="vevent p-experience h-event" itemprop="worksFor" itemscope="itemscope" itemtype="http://schema.org/Event http://schema.org/Role">
+			<p itemprop="organizer" itemscope="itemscope" itemtype="http://schema.org/Organization"{% if action == 'edit' %} data-uri="{{ path('company_edit', {'id': experience.company.id}) }}"{% endif %}>
+				<span itemprop="legalName" class="p-fn p-org"{% if action == 'edit' %} data-name="company[name]"{% endif %}>
+					{{- experience.company.name -}}
+				</span>
+				{% if experience.company.link -%}
+					<a href="{{ experience.company.link }}" title="{{ 'app.company.link.title'|trans }}" class="p-fn p-org u-url" itemprop="legalName url" target="_blank"
+							{%- if action == 'edit' %} data-name="company[name]"{% endif -%}
+						><i class="fa-solid fa-external-link-alt"></i></a>
+				{% endif -%}
+			</p>
+			<h3 class="summary p-name" itemprop="description rolename"{% if action == 'edit' %} data-name="realisation[what]"{% endif %}>{{ experience.role|raw }}</h3>
+			<p class="time"><time class="dtstart dt-start" datetime="{{ experience.startDate|date('Y-m-d') }}" itemprop="startDate"{% if action == 'edit' %} data-name="experience[startDate]"{% endif %}>
+					{{- experience.startDate|format_date(pattern='MMM')|title }}
+					{%- if (experience.startDate|date('Y') != experience.endDate|default('now')|date('Y')) %} {{ experience.startDate|date('Y') }}{% endif -%}
+				</time> – <time class="dtend dt-end" datetime="
+					{{- experience.endDate|default('now')|date('Y-m-d') }}" itemprop="endDate"{% if action == 'edit' %} data-name="experience[endDate]"{% endif %}>
+					{%- if experience.endDate is not null %}
+						{{- experience.endDate|format_date(pattern='MMM') }} {{ experience.endDate|date('Y') -}}
+					{% else %}
+						{{- 'app.experience.now'|trans -}}
+					{% endif -%}
+				</time>
+				<small>({% if experience.fixedTerm %}{{ 'app.experience.temporary'|trans }}, {% endif -%}
+					{{- 'app.experience.duration'|trans({'years': experience.duration.y, 'months': experience.duration.m})|trim }})</small></p>
+			<div class="summaries">
+				{{- experience.genericSummary|nl2br -}}
+			</div>
+			{#-<p class="place location p-location right" itemprop="location"{% if action == 'edit' %} data-name="company[address][city]"{% endif %}>{{ experience.company.address.city }}</p>#}
+			{% if experience.realisations.count %}
+			<div class="titles">
+				<h4>{{ 'app.realisation.heading'|trans({'count': experience.realisations.count} ) }}</h4>
+			</div>
+			<div class="realisations">
+				{% for realisation in experience.realisations %}
+				<details open="open" class="p-achievement"{% if action == 'edit' %} data-uri="{{ path('realisation_edit', {'id': realisation.id}) }}"{% endif %}>
+					<summary class="summary p-summary"><h5{% if action == 'edit' %} data-name="realisation[name]"{% endif %}>
+						{{- realisation.name -}}
+						</h5>
+						{% if realisation.link %}
+						<a href="{{ realisation.link }}" title="{{ 'app.realisation.link.title'|trans }}" target="_blank"{% if action == 'edit' %} data-name="realisation[name]"{% endif %}>
+						<i class="fa-solid fa-external-link-alt fa-xs"></i>
+						</a>
+						{% else %}
+						{% endif %}
+					</summary>
+					{% if realisation.tasks|length -%}
+					<details open="open">
+						<summary{% if action == 'edit' %}><span data-name="realisation[description]"{% endif %}>{{ realisation.description }}
+						{% if action == 'edit' %}]</span>{% endif -%}
+						{%- if (realisation.technologies.count) %}
+							 <span class="technologies">(
+								{%- for technology in realisation.technologies -%}
+								<span data-left="{{ technology.skill.lft }}" data-right="{{ technology.skill.rgt }}"
+										{%- if action == 'edit' %}
+										data-uri="{{ path('technology_edit', {'realisation': technology.realisation.id, 'skill': technology.skill.name, 'version': technology.version}) }}" data-name="skill[technology]"
+										{%- endif %}>
+									{{- technology.skill.name }}
+									{%- if technology.version %} {% if action == 'edit' %}<span data-name="technology[version]">{% endif -%}
+									{{- technology.version -}}
+										{%- if action == 'edit' %}</span>{% endif -%}
+									{% endif %}</span>
+								{%- if not loop.last %}, {% endif %}
+								{%- endfor %})</span>
+						{%- endif %}</summary>
+						<ul>
+							{% for task in realisation.tasks %}
+							<li{% if action == 'edit' %} data-uri="{{ path('task_edit', {'id': task.id}) }}" data-name="task[description]"{% endif %}>{{ task.description|raw }}</li>
+							{% endfor %}
+						</ul>
+					</details>
+					{% else %}
+					<div>
+						{%- if action == 'edit' %}<span data-name="realisation[description]">{% endif %}
+						{{- realisation.description -}}
+						{%- if action == 'edit' %}</span>{% endif %}
+						{%- if (realisation.technologies.count) %}
+						<span class="technologies">(
+							{%- for technology in realisation.technologies -%}
+							<span data-left="{{ technology.skill.lft }}" data-right="{{ technology.skill.rgt }}"
+									{%- if action == 'edit' %}
+									data-uri="{{ path('technology_edit', {'realisation': technology.realisation.id, 'skill': technology.skill.name, 'version': technology.version}) }}" data-name="skill[technology]"
+									{%- endif %}>
+								{{- technology.skill.name }}
+								{%- if technology.version %} {% if action == 'edit' %}<span data-name="technology[version]">{% endif -%}
+								{{- technology.version -}}
+									{%- if action == 'edit' %}</span>{% endif -%}
+								{% endif %}</span>
+							{%- if not loop.last %}, {% endif %}
+							{%- endfor %})</span>
+						{%- endif %}
+					</div>
+					{% endif %}
+				</details>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		{% endfor %}
 	</section>
 	{% endif %}
 
 	{% if me.trainings.count %}
 	<section id="Training" class="vcalendar education" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-	{% include 'training/index_cv.html.twig' with {'entities': me.trainings} %}
+		<h2>{{ 'app.training.heading'|trans }}</h2>
+		{% for training in me.trainings %}
+		<div id="{{ training.id }}" class="vevent" itemscope="itemscope" itemtype="http://schema.org/EducationalEvent"{% if action == 'edit' %} data-uri="{{ path('experience_edit', {'id': training.id}) }}"{% endif %}>
+			<p><time class="dtstart" datetime="{{ training.startDate|date('Y-m-d') }}" itemprop="startDate"{% if action == 'edit' %} data-name="experience[startDate]"{% endif %}>
+				{{- training.startDate|date('Y') -}}
+				</time> – <time class="dtend" datetime="{{ training.endDate|date('Y-m-d') }}" itemprop="endDate"{% if action == 'edit' %} data-name="experience[endDate]"{% endif %}>
+					{{- training.endDate|date('Y') -}}
+				</time></p>
+			<div>
+				{% if training.role %}<h3 class="summary"{% if action == 'edit' %} data-name="experience[what]"{% endif %}>{{ training.role }}</h3>{% endif %}
+				<p itemprop="organizer" itemscope="itemscope" itemtype="http://schema.org/Organization"{% if action == 'edit' %} data-uri="{{ path('company_edit', {'id': training.company.id}) }}"{% endif %}>
+					<span itemprop="legalName"{% if action == 'edit' %} data-name="company[name]"{% endif %}>
+						{{- training.company.name -}}
+					</span>
+					{%- if training.company.link %}
+					<a href="{{ training.company.link }}" title="{{ 'app.company.link.title'|trans }}" itemprop="legalName url" target="_blank"
+							{%- if action == 'edit' %} data-name="company[name]"{% endif -%}
+						><i class="fa-solid fa-external-link-alternate"></i>
+					</a>
+					{%- endif -%},
+					<span class="place location" itemprop="location"{% if action == 'edit' %} data-name="company[address][city]"{% endif %}>{{ training.company.address.city }}</span>
+				</p>
+			</div>
+		</div>
+		{% endfor %}
 	</section>
 	{% endif -%}
 
 	{% if me.referrals.count %}
 	<section id="References" class="section" itemscope="itemscope" itemtype="http://schema.org/ItemList">
-	{% include 'person/index_references.html.twig' with {'entities': me.referrals} %}
+		<h2>{{ 'app.person.references.heading'|trans({'count': me.referrals.count} ) }}</h2>
+		{% for reference in me.referrals %}
+		<div id="{{ reference.id }}"{% if action == 'edit' %} data-uri="{{ path('person_edit', {'id': reference.id}) }}"{% endif %}>
+			<h3{% if action == 'edit' %} data-name="person[fullName]"{% endif %}>{{ reference.fullName }}</h3>
+			{%~ if reference.experiences.count %}
+			<p{% if action == 'edit' %} data-uri="{{ path('experience_edit', {'id': reference.experiences[0].id}) }}"><span data-name="experience[what]"{% endif %}>
+				{{- reference.experiences[0].role|raw }}
+				{%- if action == 'edit' %}</span>{% endif %}, {% if action == 'edit' %}<span data-name="experience[company]">{% endif %}
+				{{- reference.experiences[0].company.name -}}
+				{%- if action == 'edit' %}</span>{% endif -%}
+			</p>
+			{%~ endif %}
+		</div>
+		{% endfor %}
 	</section>
 	{% endif %}
 </main>
