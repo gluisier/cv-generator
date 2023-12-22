@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 abstract class DurationType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('role')
