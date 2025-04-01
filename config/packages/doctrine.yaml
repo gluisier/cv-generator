@@ -23,7 +23,10 @@ doctrine:
                 prefix: Gedmo\Translatable\Entity
                 # make sure vendor library location is correct
                 dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Translatable/Entity/MappedSuperclass"
-        
+        controller_resolver:
+            auto_mapping: false
+            enabled: false
+
         filters:
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter

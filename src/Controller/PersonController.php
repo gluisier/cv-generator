@@ -7,6 +7,7 @@ use App\Form\PersonType;
 use App\Repository\AbbreviationRepository;
 use App\Repository\PersonRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class PersonController extends AbstractController
     #[Route("/", host: "{_locale}.%host%", name: "me_translated", methods: ["GET"])]
     public function me(PersonRepository $personRepository, AbbreviationRepository $abbreviationRepository): Response
     {
-        $response = new Response('', Response::HTTP_OK, ['Content-Type' => 'application/xhtml+xml']);
+        $response = new Response('', Response::HTTP_OK/*, ['Content-Type' => 'application/xhtml+xml']*/);
         return $this->render('cv.html.twig', [
             'me' => $personRepository->find($this->getParameter('me')),
             'abbreviations' => $abbreviationRepository->findAll(),
@@ -37,7 +38,7 @@ class PersonController extends AbstractController
             'action' => 'edit',
         ]);
     }
-    
+
     #[Route("/person/", name: "person_index", methods: ["GET"])]
     public function index(PersonRepository $personRepository): Response
     {
@@ -61,14 +62,14 @@ class PersonController extends AbstractController
             return $this->redirectToRoute('person_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('person/new.html.twig', [
+        return $this->render('person/new.html.twig', [
             'person' => $person,
             'form' => $form,
         ]);
     }
 
     #[Route("/{id}", name: "person_show", methods: ["GET"])]
-    public function show(Person $person): Response
+    public function show(#[MapEntity] Person $person): Response
     {
         return $this->render('person/show.html.twig', [
             'person' => $person,
@@ -76,7 +77,7 @@ class PersonController extends AbstractController
     }
 
     #[Route("/person/{id}/edit", name: "person_edit", methods: ["GET","POST"])]
-    public function edit(Request $request, Person $person, ManagerRegistry $doctrine): Response
+    public function edit(Request $request, #[MapEntity] Person $person, ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(PersonType::class, $person);
         $form->handleRequest($request);
@@ -87,14 +88,14 @@ class PersonController extends AbstractController
             return $this->redirectToRoute('person_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('person/edit.html.twig', [
+        return $this->render('person/edit.html.twig', [
             'person' => $person,
             'form' => $form,
         ]);
     }
 
     #[Route("/person/{id}", name: "person_delete", methods: ["POST"])]
-    public function delete(Request $request, Person $person, ManagerRegistry $doctrine): Response
+    public function delete(Request $request, #[MapEntity] Person $person, ManagerRegistry $doctrine): Response
     {
         if ($this->isCsrfTokenValid('delete'.$person->getId(), $request->request->get('_token'))) {
             $entityManager = $doctrine->getManager();

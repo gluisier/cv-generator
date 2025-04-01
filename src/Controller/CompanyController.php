@@ -6,6 +6,7 @@ use App\Entity\Company;
 use App\Form\Company1Type;
 use App\Repository\CompanyRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,14 +37,14 @@ class CompanyController extends AbstractController
             return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('company/new.html.twig', [
+        return $this->render('company/new.html.twig', [
             'company' => $company,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'company_show', methods: ['GET'])]
-    public function show(Company $company): Response
+    public function show(#[MapEntity] Company $company): Response
     {
         return $this->render('company/show.html.twig', [
             'company' => $company,
@@ -51,7 +52,7 @@ class CompanyController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'company_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Company $company, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Company $company, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(Company1Type::class, $company);
         $form->handleRequest($request);
@@ -62,14 +63,14 @@ class CompanyController extends AbstractController
             return $this->redirectToRoute('company_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('company/edit.html.twig', [
+        return $this->render('company/edit.html.twig', [
             'company' => $company,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'company_delete', methods: ['POST'])]
-    public function delete(Request $request, Company $company, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Company $company, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
             $entityManager->remove($company);
